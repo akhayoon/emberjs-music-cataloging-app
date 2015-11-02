@@ -27,11 +27,21 @@ var pretender = Song.create({
 var SongCollection = Ember.Object.extend({
 	content: [],
 	sortProperties: ['rating:desc'],
-	sortedContent: Ember.computed.sort('content', 'sortProperties'),
+	sortedContent: Ember.computed.sort('content', 'sortProperties')
 });
 
 var songs = SongCollection.create();
-songs.get('content').pushObjects([blackDog, yellowLedbetter,pretender]);
+songs.get('content').pushObjects([blackDog, yellowLedbetter, pretender]);
+
+window.songs = songs;
+
+var alwaysWaiting = Song.create({
+	title: 'Always Waiting',
+	band: 'Kaya Project',
+	rating: 5
+});
+
+window.newSong = alwaysWaiting;
 
 export default Ember.Controller.extend({
 	songs: songs
