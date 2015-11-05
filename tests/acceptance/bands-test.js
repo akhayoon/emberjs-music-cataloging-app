@@ -2,6 +2,7 @@ import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import Pretender from 'pretender';
+import httpStubs from '../helpers/http-stubs';
 
 var server;
 
@@ -18,28 +19,15 @@ module('Acceptance | bands', {
 
 test('List bands', function(assert){
   server = new Pretender(function() {
-    this.get('/bands', function() {
-      var response = {
-        data: [
-          {
-            id: 1,
-            type: "bands",
-            attributes: {
-              name: "Radiohead"
-            }
-          },
-          {
-            id: 2,
-            type: "bands",
-            attributes: {
-              name: "Long Distance calling"
-            }
-          },
-        ]
-      };
-      return [200, { "Content-Type": "application/vnd.api+json" },
-      JSON.stringify(response)];
-    });
+    httpStubs.stubBands(this, [
+        {
+          id:1,
+          attributes: {
+            name: "Radiohead"
+          }
+        }
+    ]);
+    httpStubs.stubCreateBand(this, 2);
   });
 
   visit('/bands');
