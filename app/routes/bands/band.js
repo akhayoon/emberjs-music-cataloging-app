@@ -5,9 +5,9 @@ export default Ember.Route.extend({
     return this.store.findRecord('band', params.id);
   },
 
-  actions: {
-    didTransition: function() {
-      document.title = 'Bands - Rock & Roll';
-    },
-  }
+  // actions: {
+  //   didTransition: function() {
+  //     document.title = 'Bands - Rock & Roll';
+  //   },
+  // }
 });
