@@ -18,8 +18,8 @@ export default Ember.Route.extend({
       });
     },
 
-    // didTransition: function() {
-    //   document.title = 'Bands - Rock & Roll';
-    // },
+    didTransition: function() {
+      document.title = 'Bands - Rock & Roll';
+    },
   }
 });

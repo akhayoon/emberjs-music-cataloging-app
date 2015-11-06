@@ -133,3 +133,31 @@ html, body {
 .search-panel .input-group-btn .search-button {
   margin-left: -5px;
 }
+
+loading-pane
+{
+  margin: 25px auto;
+}
+.loading-message
+{
+  color: #aaa;
+  text-align: center;
+}
+.error-pane
+{
+  background-color: rgba(255, 176, 176, 0.33);
+  margin: 25px auto;
+}
+.error-message
+{
+  color: #e22626;
+  line-height: 100px;
+  text-align: center;
+}
+.spinner
+{
+  background: url('http://www.ajaxload.info/images/exemples/21.gif') no-repeat;
+  height: 31px;
+  margin: 0 auto;
+  width: 31px;
+}
