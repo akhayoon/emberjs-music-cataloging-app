@@ -18,16 +18,21 @@ module('Acceptance | bands', {
 });
 
 test('List bands', function(assert){
-  server = new Pretender(function() {
+  server = new Pretender(function() {  
     httpStubs.stubBands(this, [
         {
           id:1,
           attributes: {
             name: "Radiohead"
           }
+        },
+        {
+          id:2,
+          attributes: {
+            name: "Long Distance calling"
+          }
         }
     ]);
-    httpStubs.stubCreateBand(this, 2);
   });
 
   visit('/bands');
@@ -42,37 +47,15 @@ test('List bands', function(assert){
 
 test('Create a new band', function(assert) {
   server = new Pretender(function() {
-    this.get('/bands', function() {
-      var response = {
-      data: [
+    httpStubs.stubBands(this, [
         {
-          id: 1,
-          type: "bands",
+          id:1,
           attributes: {
             name: "Radiohead"
           }
         }
-      ]
-    };
-    return [200, { "Content-Type": "application/vnd.api+json" },
-    JSON.stringify(response)];
-    });
-
-    this.post('/bands', function() {
-      var response = {
-      data: [
-        {
-          id: 2,
-          type: "bands",
-          attributes: {
-            name: "Long Distance Calling"
-          }
-        }
-      ]
-    };
-    return [200, { "Content-Type": "application/vnd.api+json" },
-    JSON.stringify(response)];
-    });
+    ]);
+    httpStubs.stubCreateBand(this, 2);
   });
 
   visit('/bands');
@@ -89,44 +72,25 @@ test('Create a new band', function(assert) {
 
 test('Create a new song in two steps', function(assert) {
   server = new Pretender(function() {
-    this.get('/bands', function() {
-      var response = {
-        data: [
-          {
-            id: 1,
-            type: "bands",
-            attributes: {
-              name: "Radiohead"
-            }
+    httpStubs.stubBands(this, [
+        {
+          id:1,
+          attributes: {
+            name: "Radiohead"
           }
-        ]
-      };
-      return [200, { "Content-Type": "application/vnd.api+json" },
-      JSON.stringify(response)];
-      });
-      
-      this.post('/songs', function() {
-        var response = {
-        data: [
-          {
-            id: 1,
-            type: "songs",
-            attributes: {
-              name: "Killer Cars"
-            }
-          }
-        ]
-      };
-      return [200, { "Content-Type": "application/vnd.api+json" },
-      JSON.stringify(response)];
-    });
+        }
+    ]);
+    httpStubs.stubSongs(this,1, []);
+    httpStubs.stubCreateSong(this, 1);
   });
+
 
   visit('/');
   selectBand('Radiohead');
   click('a:contains("create one")');
   fillIn('.new-song', 'Killer Cars');
   submit('.new-song-form');
+
   
   andThen(function() {
     assertElement(assert, '.songs .song:contains("Killer Cars")', "Creates the song and displays it in the list");
