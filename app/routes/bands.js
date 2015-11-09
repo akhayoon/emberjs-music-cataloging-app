@@ -1,12 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  model: function() {
+  model() {
     return this.store.findAll('band');
   },
 
   actions: {
-    createBand: function() {
+    createBand() {
       var route = this, 
           controller = this.get('controller');
 
@@ -18,7 +18,7 @@ export default Ember.Route.extend({
       });
     },
 
-    didTransition: function() {
+    didTransition() {
       document.title = 'Bands - Rock & Roll';
     },
   }

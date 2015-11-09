@@ -49,7 +49,7 @@ export default Controller.extend({
   }),
 
   actions: {
-    updateRating: function(song, rating) {
+    updateRating(song, rating) {
       if (song.get('rating') === rating) {
         rating = null;
       }  
@@ -58,7 +58,7 @@ export default Controller.extend({
       song.save();
     },
 
-    enableSongCreation: function() {
+    enableSongCreation() {
       this.set('songCreationStarted', true);
     },
 
