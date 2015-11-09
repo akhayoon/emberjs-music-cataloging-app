@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { capitalize } from '../../../helpers/capitalize';
 
-const { Controller, computed, isEmpty} = Ember;
+const { Controller, computed} = Ember;
 
 export default Controller.extend({
   songCreationStarted: false,
@@ -32,16 +32,11 @@ export default Controller.extend({
 
   sortedSongs: computed.sort('matchingSongs', 'sortProperties'),
 
-  canCreateSong: Ember.computed('songCreationStarted', 
-    'model.songs.length', function () {
+  isAddButtonDisabled: computed.empty('title'),
 
-    return this.get('songCreationStarted') || 
-    this.get('model.songs.length');
-  }),
+  hasSongs: computed.bool('model.songs.length'),
 
-  isAddButtonDisabled: computed('title', function() {
-      return isEmpty(this.get('title'));
-  }),
+  canCreateSong: computed.or('songCreationStarted', 'hasSongs'),
 
   newSongPlaceholder: computed('model.name', function() {
     var bandName = this.get('model.name');
