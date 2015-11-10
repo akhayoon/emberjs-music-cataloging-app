@@ -56,7 +56,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    apiHost:  'https://json-api.rockandrollwithemberjs.com';
   }
 
   return ENV;
